@@ -1,0 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemyBattleUnit : BattleUnit
+{
+    public UnitStats enemyStats;
+
+    public int HP;
+    public int attackPower;
+    public int defense;
+
+    public EnemyBattleUnit(UnitStats enemyStats)
+    {
+        this.enemyStats = enemyStats;
+        
+        this.unitName = enemyStats.unitName;
+        this.HP = enemyStats.HP;
+        this.attackPower = enemyStats.attackPower;
+        this.defense = enemyStats.defense;
+    }
+
+    public override void CalculateInitiative()
+    {
+        base.CalculateInitiative();
+
+        // Generate an enemy initiative range from 2 to 9
+        initiative = Random.Range(0, 7) + 2;
+        Debug.Log(unitName + "'s initiative is " + initiative);
+    }
+}

@@ -28,8 +28,9 @@ public class BattleManager : MonoBehaviour
         // Set up the list of battle units
         for (int i = 0; i < enemy.Count; i++)
         {
+            //TODO: Rework enemy stats loading
             // Create a new battle unit with index stats
-            BattleUnit unit = new BattleUnit(enemy[i]);
+            EnemyBattleUnit unit = new EnemyBattleUnit(enemy[i]);
             // Calculates the units initiative
             unit.CalculateInitiative();
             // Add the unit to the list of battle units
@@ -37,7 +38,7 @@ public class BattleManager : MonoBehaviour
         }
 
         // Add the player battle unit
-        BattleUnit playerUnit = new BattleUnit("Player", 80, 5, 5, 0); // PLACEHOLDER; replace with actual shit once player stats implemented
+        PlayerBattleUnit playerUnit = new PlayerBattleUnit("Player", 1, 1, 1, 1, 1, 1);
         battleUnits.Add(playerUnit);
 
         // Order the battle units list by initiative
