@@ -878,6 +878,7 @@ GameObject:
   - component: {fileID: 358002513}
   - component: {fileID: 358002515}
   - component: {fileID: 358002514}
+  - component: {fileID: 358002517}
   - component: {fileID: 358002516}
   m_Layer: 0
   m_Name: Player
@@ -949,6 +950,26 @@ MonoBehaviour:
   bobFrequency: 6
   bobHeight: 0.25
   bobSwayAngle: 1
+--- !u!114 &358002517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358002512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b8609add05562429e258b74e935c1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vitality: 8
+  dexterity: 0
+  strength: 0
+  endurance: 0
+  intelligence: 0
+  luck: 0
+  level: 12
+  HP: 0
 --- !u!1 &376812278
 GameObject:
   m_ObjectHideFlags: 0

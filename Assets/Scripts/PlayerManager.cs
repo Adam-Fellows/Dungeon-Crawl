@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public event EventHandler<OnEnemyEncountedEventArgs> OnEnemyEncounter;
 
     private PlayerMovement playerMovement;
+    private PlayerStats playerStats;
     private PlayerCameraEffects playerCameraEffects;
 
     public class OnEnemyEncountedEventArgs 
@@ -34,6 +35,7 @@ public class PlayerManager : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerCameraEffects = GetComponent<PlayerCameraEffects>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     public void EnemyEncounter(Enemy enemy, GameObject enemyObject)
@@ -41,6 +43,18 @@ public class PlayerManager : MonoBehaviour
         enemyObject.GetComponent<Enemy>().InitiateCombatPosition();
         OnEnemyEncounter?.Invoke(this, new OnEnemyEncountedEventArgs { enemyUnits = enemy.enemyUnits });
     }
+
+    public int VIT() => playerStats.vitality;
+
+    public int DEX() => playerStats.dexterity;
+
+    public int STR() => playerStats.strength;
+
+    public int END() => playerStats.endurance;
+
+    public int INT() => playerStats.intelligence;
+
+    public int LCK() => playerStats.luck;
 
     public bool IsPlayerMoving()
     {

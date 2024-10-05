@@ -6,16 +6,13 @@ public class EnemyBattleUnit : BattleUnit
 {
     public UnitStats enemyStats;
 
-    public int HP;
-    public int attackPower;
-    public int defense;
-
     public EnemyBattleUnit(UnitStats enemyStats)
     {
         this.enemyStats = enemyStats;
         
         this.unitName = enemyStats.unitName;
-        this.HP = enemyStats.HP;
+        this.maxHP = enemyStats.HP;
+        this.currentHP = enemyStats.HP;
         this.attackPower = enemyStats.attackPower;
         this.defense = enemyStats.defense;
     }

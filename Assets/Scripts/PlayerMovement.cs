@@ -130,7 +130,6 @@ public class PlayerMovement : MonoBehaviour
             Enemy enemy = hit.transform.gameObject.GetComponent<Enemy>();
             if (enemy != null)
             {
-                Debug.Log(enemy.name);
                 // Initiate combat
                 PlayerManager.instance.EnemyEncounter(enemy, enemy.gameObject);
                 // Cannot move if initiating combat
