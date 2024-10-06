@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: better implementation to get HP of player from here inot player battle unit in battle manager
+//TODO: better implementation to get HP of player from here into player battle unit in battle manager
 public class PlayerStats : MonoBehaviour
 {
     public int vitality;
@@ -15,32 +15,38 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int level;
     [SerializeField] private int HP;
 
-    private const int maxLevel = 99;
-    private const int maxVit = 40;
-    private const int maxHP = 999;
-
-    private const double a = 2.718; // Base of the logarithm (Euler's number for natural logarithm)
-    private const double b = 4.0;  // Multiplier to control the growth rate
+    private void Start()
+    {
+        InitialisePlayerStats();
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) HP = CalculateHP(vitality, level);
+    }
+    
+    private void InitialisePlayerStats()
+    {
+        // Get the players base HP
+        HP = GetBaseHP();
     }
 
-    public int CalculateHP(int vitality, int level)
+    private int GetBaseHP()
     {
-        // Ensure values are within the range
-        vitality = Math.Clamp(vitality, 1, maxVit);  // Clamp vitality between 1 and MaxVit
-        level = Math.Clamp(level, 1, maxLevel);      // Clamp level between 1 and MaxLevel
+        float baseHP;
+        float baseMin = 2;
+        float baseMax = 8;
 
-        // Calculate the HP using the logarithmic formula
-        double vitalityFactor = (double)vitality / maxVit;
-        double levelFactor = (double)level / maxLevel;
+        float a = UnityEngine.Random.Range(1, 4);
+        // Modifier for the base HP formula
+        float modifier = UnityEngine.Random.Range(baseMin, baseMax);
+        // 50% chance for either base HP calculation
+        baseHP = a > 2 ? (10 + modifier) : (9 * (10 + modifier) / 10);
+        // Return the rounded baseHP
+        return Mathf.RoundToInt(baseHP);
+    }
 
-        // HP formula
-        double hp = maxHP * Math.Log(b * (vitalityFactor * levelFactor) + 1, a);
-
-        // Round and cast to integer
-        return (int)Math.Round(hp);
+    public int PlayerHP()
+    {
+        return HP;
     }
 }

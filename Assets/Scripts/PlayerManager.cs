@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         OnEnemyEncounter?.Invoke(this, new OnEnemyEncountedEventArgs { enemyUnits = enemy.enemyUnits });
     }
 
-    public int VIT() => playerStats.vitality;
+    public int HP() => playerStats.PlayerHP();
 
     public int DEX() => playerStats.dexterity;
 

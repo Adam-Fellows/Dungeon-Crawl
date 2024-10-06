@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 804595b6a9b77834399d15c1f14e8b12, type: 3}
-  m_Name: BigSnail
+  m_Name: Skeleton
   m_EditorClassIdentifier: 
-  unitName: Big Snail
-  HP: 8
-  attackPower: 2
-  defense: 2
+  unitName: Skeleton
+  HP: 24
+  attackPower: 6
+  defense: 0

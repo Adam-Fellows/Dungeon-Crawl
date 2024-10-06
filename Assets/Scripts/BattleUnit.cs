@@ -22,7 +22,9 @@ public class BattleUnit
     {
         //TODO: edge case for damage and defense = 0
         float damage = value * value / (value + defense);
+        Debug.Log(damage + " inflicted to " + unitName);
         currentHP -= Mathf.RoundToInt(damage);
+        Debug.Log(unitName + "'s current health: " + currentHP);
     }
 
     public virtual void DealDamage(BattleUnit targetUnit, int value)

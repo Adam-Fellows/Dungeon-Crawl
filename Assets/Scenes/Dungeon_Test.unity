@@ -196,7 +196,7 @@ GameObject:
   m_Layer: 7
   m_Name: PlaceholderEnemy
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyUnits:
   - {fileID: 11400000, guid: baa8b6320e8613145b3961c2ba3ac678, type: 2}
+  - {fileID: 11400000, guid: e08c84b7ab37488448e787595a0d0772, type: 2}
 --- !u!65 &153555049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -883,7 +884,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2243,7 +2244,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1909971922}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2614,7 +2615,7 @@ GameObject:
   - component: {fileID: 956046627}
   m_Layer: 5
   m_Name: GeneralUI
-  m_TagString: Untagged
+  m_TagString: GeneralUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22896,7 +22897,7 @@ RectTransform:
   - {fileID: 425790442}
   - {fileID: 381243587}
   m_Father: {fileID: 1909971922}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -23263,7 +23264,7 @@ GameObject:
   - component: {fileID: 1909971923}
   m_Layer: 5
   m_Name: BattleUI
-  m_TagString: Untagged
+  m_TagString: BattleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23342,8 +23343,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 798034147}
   - {fileID: 1843516076}
+  - {fileID: 798034147}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23473,6 +23474,7 @@ GameObject:
   - component: {fileID: 2045167886}
   - component: {fileID: 2045167885}
   - component: {fileID: 2045167887}
+  - component: {fileID: 2045167888}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -23520,6 +23522,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18d4bea0936997d43a73dd96a1bbf73d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2045167888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045167884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef43c305b48dcc40ad3a7246c4c4dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &137201245827730839

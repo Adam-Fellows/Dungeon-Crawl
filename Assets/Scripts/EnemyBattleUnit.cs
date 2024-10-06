@@ -12,7 +12,7 @@ public class EnemyBattleUnit : BattleUnit
         
         this.unitName = enemyStats.unitName;
         this.maxHP = enemyStats.HP;
-        this.currentHP = enemyStats.HP;
+        this.currentHP = maxHP;
         this.attackPower = enemyStats.attackPower;
         this.defense = enemyStats.defense;
     }
