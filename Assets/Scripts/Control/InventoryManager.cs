@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+namespace Crawl.Control
 {
-    private void Start()
+    public class InventoryManager : MonoBehaviour
     {
-        
-    }
+        private void Start()
+        {
 
-    private void Update()
-    {
-        
+        }
+
+        private void Update()
+        {
+
+        }
     }
 }

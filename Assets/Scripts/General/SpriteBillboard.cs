@@ -2,37 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpriteBillboard : MonoBehaviour
+namespace Crawl.General.SpriteEffects
 {
-    private Camera mainCamera;
-
-    private void Start()
+    public class SpriteBillboard : MonoBehaviour
     {
-        // Get the main camera in the scene
-        mainCamera = Camera.main;
-    }
+        private Camera mainCamera;
 
-    private void Update()
-    {
-        // Make the sprite face the camera with Y-axis restriction
-        FaceCameraWithYAxisRestriction();
-    }
-
-    private void FaceCameraWithYAxisRestriction()
-    {
-        if (mainCamera != null)
+        private void Start()
         {
-            // Get the direction from the sprite to the camera
-            Vector3 direction = mainCamera.transform.position - transform.position;
+            // Get the main camera in the scene
+            mainCamera = Camera.main;
+        }
 
-            // Zero out the Y component of the direction to restrict Y-axis rotation
-            direction.y = 0;
+        private void Update()
+        {
+            // Make the sprite face the camera with Y-axis restriction
+            FaceCameraWithYAxisRestriction();
+        }
 
-            // Check if there's any direction left to prevent NaN rotations
-            if (direction.sqrMagnitude > 0.001f)
+        private void FaceCameraWithYAxisRestriction()
+        {
+            if (mainCamera != null)
             {
-                // Rotate the sprite to face the camera only along the Y-axis
-                transform.rotation = Quaternion.LookRotation(-direction);
+                // Get the direction from the sprite to the camera
+                Vector3 direction = mainCamera.transform.position - transform.position;
+
+                // Zero out the Y component of the direction to restrict Y-axis rotation
+                direction.y = 0;
+
+                // Check if there's any direction left to prevent NaN rotations
+                if (direction.sqrMagnitude > 0.001f)
+                {
+                    // Rotate the sprite to face the camera only along the Y-axis
+                    transform.rotation = Quaternion.LookRotation(-direction);
+                }
             }
         }
     }

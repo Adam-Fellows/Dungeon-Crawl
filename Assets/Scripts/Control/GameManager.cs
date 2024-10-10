@@ -2,80 +2,87 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { normal, combat }
+public enum GameState 
+{ 
+    normal, 
+    combat 
+}
 
-public class GameManager : MonoBehaviour
+namespace Crawl.Control
 {
-    public static GameManager instance;
-
-    public GameState gameState;
-
-    [SerializeField] private CanvasGroup battleCanvasGroup;
-    [SerializeField] private CanvasGroup generalCanvasGroup;
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (instance == null)
+        public static GameManager instance;
+
+        public GameState gameState;
+
+        [SerializeField] private CanvasGroup battleCanvasGroup;
+        [SerializeField] private CanvasGroup generalCanvasGroup;
+
+        private void Awake()
         {
-            instance = this;
-        }
-        else
-        {
-            Destroy(instance);
-            instance = this;
-        }
-    }
-
-    private void Start()
-    {
-        SetGameState(GameState.normal);
-
-        InactivateCanvasGroup(battleCanvasGroup);
-
-        PlayerManager.instance.OnEnemyEncounter += Instance_OnEnemyEncounter;
-    }
-
-    private void Instance_OnEnemyEncounter(object sender, PlayerManager.OnEnemyEncountedEventArgs e)
-    {
-        InitiateCombat(e.enemyUnits);
-    }
-
-    public void InitiateCombat(List<UnitStats> enemy)
-    {
-        if (GetGameState() == GameState.combat)
-        {
-            Debug.Log("Combat cannot be initiated; already in combat.");
-            return;
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(instance);
+                instance = this;
+            }
         }
 
-        SetGameState(GameState.combat);
-        // Send out events to initiate combat
-        BattleManager.instance.InitiateCombat(enemy);
+        private void Start()
+        {
+            SetGameState(GameState.normal);
 
-        // Update UI
-        ActivateCanvasGroup(battleCanvasGroup);
-        InactivateCanvasGroup(generalCanvasGroup);
-    }
+            InactivateCanvasGroup(battleCanvasGroup);
 
-    private void ActivateCanvasGroup(CanvasGroup group)
-    {
-        group.interactable = true;
-        group.alpha = 1;
-    }
+            PlayerManager.instance.OnEnemyEncounter += Instance_OnEnemyEncounter;
+        }
 
-    private void InactivateCanvasGroup(CanvasGroup group)
-    {
-        group.interactable = false;
-        group.alpha = 0;
-    }
+        private void Instance_OnEnemyEncounter(object sender, PlayerManager.OnEnemyEncountedEventArgs e)
+        {
+            InitiateCombat(e.enemyUnits);
+        }
 
-    private void SetGameState(GameState state)
-    {
-        gameState = state;
-    }
+        public void InitiateCombat(List<UnitStats> enemy)
+        {
+            if (GetGameState() == GameState.combat)
+            {
+                Debug.Log("Combat cannot be initiated; already in combat.");
+                return;
+            }
 
-    public GameState GetGameState()
-    {
-        return gameState;
+            SetGameState(GameState.combat);
+            // Send out events to initiate combat
+            BattleManager.instance.InitiateCombat(enemy);
+
+            // Update UI
+            ActivateCanvasGroup(battleCanvasGroup);
+            InactivateCanvasGroup(generalCanvasGroup);
+        }
+
+        private void ActivateCanvasGroup(CanvasGroup group)
+        {
+            group.interactable = true;
+            group.alpha = 1;
+        }
+
+        private void InactivateCanvasGroup(CanvasGroup group)
+        {
+            group.interactable = false;
+            group.alpha = 0;
+        }
+
+        private void SetGameState(GameState state)
+        {
+            gameState = state;
+        }
+
+        public GameState GetGameState()
+        {
+            return gameState;
+        }
     }
 }

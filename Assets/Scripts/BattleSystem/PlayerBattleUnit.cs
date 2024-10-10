@@ -2,31 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBattleUnit : BattleUnit
+namespace Crawl.Battle
 {
-    public int dexterity;
-    public int strength;
-    public int endurance;
-    public int intelligence;
-    public int luck;
-
-    public PlayerBattleUnit(string unitName, int HP, int dex, int str, int end, int intl, int lck)
+    public class PlayerBattleUnit : BattleUnit
     {
-        this.unitName = unitName;
+        public int dexterity;
+        public int strength;
+        public int endurance;
+        public int intelligence;
+        public int luck;
 
-        this.maxHP = HP;
-        this.currentHP = maxHP;
-        this.dexterity = dex;
-        this.strength = str;
-        this.endurance = end;
-        this.intelligence = intl;
-        this.luck = lck;
-    }
+        public PlayerBattleUnit(string unitName, int HP, int dex, int str, int end, int intl, int lck)
+        {
+            this.unitName = unitName;
 
-    public override void CalculateInitiative()
-    {
-        base.CalculateInitiative();
+            this.maxHP = HP;
+            this.currentHP = maxHP;
+            this.dexterity = dex;
+            this.strength = str;
+            this.endurance = end;
+            this.intelligence = intl;
+            this.luck = lck;
+        }
 
-        //TODO: Calculate player initiative
+        public override void CalculateInitiative()
+        {
+            base.CalculateInitiative();
+
+            //TODO: Calculate player initiative
+        }
     }
 }

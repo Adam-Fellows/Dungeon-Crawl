@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Crawl.Control;
+using Crawl.General;
 
 namespace Crawl.Player
 {
@@ -20,29 +21,13 @@ namespace Crawl.Player
 
         private bool isMoving = false;
         private bool isRotating = false;
+
         private Vector3 targetPosition;
         private Quaternion targetRotation;
 
-        private void Start()
-        {
-            SubscribeToInputEvents();
-        }
-
-        private void SubscribeToInputEvents()
-        {
-            // Movement input
-            PlayerInput.instance.OnForwardPressed += Instance_OnForwardPressed;
-            PlayerInput.instance.OnBackwardPressed += Instance_OnBackwardPressed;
-            PlayerInput.instance.OnStrafeLeftPressed += Instance_OnStrafeLeftPressed;
-            PlayerInput.instance.OnStrafeRightPressed += Instance_OnStrafeRightPressed;
-            // Rotation input
-            PlayerInput.instance.OnLookLeftPressed += Instance_OnLookLeftPressed;
-            PlayerInput.instance.OnLookRightPressed += Instance_OnLookRightPressed;
-        }
-
         private void Instance_OnLookRightPressed(object sender, EventArgs e)
         {
-            if (GameManager.instance.GetGameState() != GameState.combat)
+            if (CanRotate())
             {
                 Rotate(90f);
             }
@@ -50,41 +35,39 @@ namespace Crawl.Player
 
         private void Instance_OnLookLeftPressed(object sender, EventArgs e)
         {
-            if (GameManager.instance.GetGameState() != GameState.combat)
+            if (CanRotate())
             {
                 Rotate(-90f);
             }
         }
 
-        private void Instance_OnStrafeRightPressed(object sender, EventArgs e)
+        private void Instance_OnForwardPressed(object sender, EventArgs e)
         {
-            if (CanMove(transform.right))
-            {
-                Move(Vector3.right);
-            }
-        }
-
-        private void Instance_OnStrafeLeftPressed(object sender, EventArgs e)
-        {
-            if (CanMove(-transform.right))
-            {
-                Move(Vector3.left);
-            }
+            BeginMove(Vector3.forward);
         }
 
         private void Instance_OnBackwardPressed(object sender, EventArgs e)
         {
-            if (CanMove(-transform.forward))
-            {
-                Move(Vector3.back);
-            }
+            BeginMove(Vector3.back);
         }
 
-        private void Instance_OnForwardPressed(object sender, EventArgs e)
+        private void Instance_OnStrafeRightPressed(object sender, EventArgs e)
         {
-            if (CanMove(transform.forward))
+            BeginMove(Vector3.right);
+        }
+
+        private void Instance_OnStrafeLeftPressed(object sender, EventArgs e)
+        {
+            BeginMove(Vector3.left);
+        }
+
+        private void BeginMove(Vector3 direction)
+        {
+            // Do checks to ensure the player can move in desired direction
+            if (!MovingToObstruction(direction) && !MovingToEnemy(direction) && CanMove())
             {
-                Move(Vector3.forward);
+                // Not moving onto enemy/obstruction so move
+                Move(direction);
             }
         }
 
@@ -100,10 +83,69 @@ namespace Crawl.Player
             StartCoroutine(MoveToPosition());
         }
 
+        private void EndMove()
+        {
+            // Send out events on player move end
+        }
+
+        private bool MovingToObstruction(Vector3 direction)
+        {
+            if (Physics.Raycast(transform.position, direction, out var hit, collisionCheckDistance, obstructionMask))
+            {
+                if (!hit.transform.gameObject.GetComponent<Collider>().isTrigger)
+                {
+                    // Moving onto an obstruction so return true
+                    return true;
+                }
+            }
+            // Not moving onto an obstruction so return false
+            return false;
+        }
+
+        private bool MovingToEnemy(Vector3 direction)
+        {
+            if (Physics.Raycast(transform.position, direction, out var hit, collisionCheckDistance, enemyMask))
+            {
+                if (hit.transform.gameObject.GetComponent<Enemy>() != null)
+                {
+                    // Get the enemy from the hit game object
+                    Enemy enemy = hit.transform.gameObject.GetComponent<Enemy>();
+                    // Initiate combat if moving onto enemy
+                    PlayerManager.instance.EnemyEncounter(enemy, enemy.gameObject);
+                    // Moving onto the enemy
+                    return true;
+                }
+            }
+            // Not moving onto enemy so return false
+            return false;
+        }
+
+        private bool CanMove()
+        {
+            if (GameManager.instance.GetGameState() != GameState.combat && !isMoving && !isRotating)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private bool CanRotate()
+        {
+            if (GameManager.instance.GetGameState() != GameState.combat && !isMoving && !isRotating)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private void Rotate(float angle)
         {
-            if (isRotating) { return; }
-
             targetRotation = Quaternion.Euler(0, transform.eulerAngles.y + angle, 0);
 
             // Start rotating
@@ -146,53 +188,33 @@ namespace Crawl.Player
             isRotating = false;
         }
 
-        private bool CanMove(Vector3 direction)
-        {
-            if (isMoving)
-            {
-                return false;
-            }
-
-            if (GameManager.instance.GetGameState() == GameState.combat)
-            {
-                // Cannot move if combat is initiaited
-                return false;
-            }
-
-            if (Physics.Raycast(transform.position, direction, out var hit, collisionCheckDistance, enemyMask))
-            {
-                Collider collider = hit.collider;
-                Enemy enemy = hit.transform.gameObject.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    // Initiate combat
-                    PlayerManager.instance.EnemyEncounter(enemy, enemy.gameObject);
-                    // Cannot move if initiating combat
-                    return false;
-                }
-            }
-
-            if (Physics.Raycast(transform.position, direction, out hit, collisionCheckDistance, obstructionMask))
-            {
-                if (!hit.transform.gameObject.GetComponent<Collider>().isTrigger)
-                {
-                    // Cannot move if obstructed by collider
-                    return false;
-                }
-            }
-            // Can move if no obstruction is present
-            return true;
-        }
-
         public bool IsMoving()
         {
             return isMoving;
         }
 
-        private void OnDrawGizmos()
+        private void OnEnable()
         {
-            Gizmos.color = Color.white;
-            Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), transform.forward * collisionCheckDistance);
+            // Movement input events
+            PlayerInput.instance.OnForwardPressed += Instance_OnForwardPressed;
+            PlayerInput.instance.OnBackwardPressed += Instance_OnBackwardPressed;
+            PlayerInput.instance.OnStrafeLeftPressed += Instance_OnStrafeLeftPressed;
+            PlayerInput.instance.OnStrafeRightPressed += Instance_OnStrafeRightPressed;
+            // Rotation input events
+            PlayerInput.instance.OnLookLeftPressed += Instance_OnLookLeftPressed;
+            PlayerInput.instance.OnLookRightPressed += Instance_OnLookRightPressed;
+        }
+
+        private void OnDisable()
+        {
+            // Movement input events
+            PlayerInput.instance.OnForwardPressed -= Instance_OnForwardPressed;
+            PlayerInput.instance.OnBackwardPressed -= Instance_OnBackwardPressed;
+            PlayerInput.instance.OnStrafeLeftPressed -= Instance_OnStrafeLeftPressed;
+            PlayerInput.instance.OnStrafeRightPressed -= Instance_OnStrafeRightPressed;
+            // Rotation input events
+            PlayerInput.instance.OnLookLeftPressed -= Instance_OnLookLeftPressed;
+            PlayerInput.instance.OnLookRightPressed -= Instance_OnLookRightPressed;
         }
     }
 }
