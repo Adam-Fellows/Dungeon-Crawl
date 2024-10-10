@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -154,18 +153,20 @@ public class BattleManager : MonoBehaviour
     {
         if (GameManager.instance.GetGameState() != GameState.combat) return;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            // + enemyUnits.Count to prevent returing negative values
-            selectionIndex = (selectionIndex - 1 + enemyUnits.Count) % enemyUnits.Count;
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            selectionIndex = (selectionIndex + 1) % enemyUnits.Count;
-        }
+        selectionIndex = 1;
+        //TODO: Update for use with new input system
+        //if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    // + enemyUnits.Count to prevent returing negative values
+        //    selectionIndex = (selectionIndex - 1 + enemyUnits.Count) % enemyUnits.Count;
+        //}
+        //if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    selectionIndex = (selectionIndex + 1) % enemyUnits.Count;
+        //}
         // Get the unit that is the players target based on the selection index
-        selectedUnit = enemyUnits[selectionIndex];
-        Debug.Log("Player selected " +selectedUnit.unitName + " as target");
+        //selectedUnit = enemyUnits[selectionIndex];
+        //Debug.Log("Player selected " +selectedUnit.unitName + " as target");
     }
 
     private void PlayerButtonAttack()
