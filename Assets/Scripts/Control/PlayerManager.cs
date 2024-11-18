@@ -1,9 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Crawl.Player;
 using Crawl.General;
+using Crawl.Data;
 
 namespace Crawl.Control
 {

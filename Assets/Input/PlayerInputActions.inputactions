@@ -2,58 +2,127 @@
     "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "Player",
+            "name": "PlayerOverworld",
             "id": "10ffb02c-9a75-4e67-a6de-dccbc3853398",
             "actions": [
                 {
-                    "name": "MoveForward",
-                    "type": "Button",
-                    "id": "65fb1322-8cc2-4e38-ba8a-1e5329a002b1",
-                    "expectedControlType": "Button",
+                    "name": "Movement",
+                    "type": "Value",
+                    "id": "17b54012-0ce7-43af-8722-3dda55747d1f",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
-                    "name": "MoveBackward",
-                    "type": "Button",
-                    "id": "7f2da623-6516-4892-95fb-f5598f7bdefe",
-                    "expectedControlType": "Button",
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "1ab12206-6a17-49d8-8a42-dfc3cfc58b0c",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
                 {
-                    "name": "StrafeLeft",
-                    "type": "Button",
-                    "id": "d0efc7d6-f4fe-474e-afe8-3b1866a9c591",
-                    "expectedControlType": "Button",
-                    "processors": "",
+                    "name": "Gamepad",
+                    "id": "3cdf5c66-8f84-4ced-a77e-4295a7c33a47",
+                    "path": "2DVector",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "StrafeRight",
-                    "type": "Button",
-                    "id": "cc795393-c7c9-432d-8bca-615dc6c37052",
-                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "RotateLeft",
-                    "type": "Button",
-                    "id": "f9fc63c8-0994-48ec-8a1b-5e7550c5777e",
-                    "expectedControlType": "Button",
+                    "name": "up",
+                    "id": "a4d6cc8c-c4ec-4462-91e6-41b2ff9332ed",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "RotateRight",
+                    "name": "down",
+                    "id": "5a26464e-4105-485a-9f0f-98686763c8c8",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "7ddd3621-4e52-4171-982a-99f2d2f78e0d",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "2b3d8e29-620b-4ebc-8d6e-bad1767642c4",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Gamepad",
+                    "id": "fd464193-561d-479f-97c5-639fa26848b7",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "9df96aeb-bc57-4cd2-b286-2019c2fc7348",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "8cfbab39-b1b1-4c97-8068-0295e47278c0",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "PlayerBattle",
+            "id": "497b9703-93e8-41ac-8c81-9aeecae3c6e3",
+            "actions": [
+                {
+                    "name": "New action",
                     "type": "Button",
-                    "id": "d661b190-ad74-4c72-b2d2-4e810da28a5d",
+                    "id": "93db7604-6d01-41b5-b5dd-da890e04c44f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -63,67 +132,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "d79b3926-4a33-49c0-b25a-69f6f7b05964",
-                    "path": "<Joystick>/stick/up",
+                    "id": "530ea5c8-f1ef-412e-910c-36d57fe8c384",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveForward",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "932405fe-e3fd-443d-8675-5be8f848bcea",
-                    "path": "<Joystick>/stick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveBackward",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2bf3f303-0f42-4664-af46-077d9d7e8ec8",
-                    "path": "<HID::Sony Interactive Entertainment Controller>/button7",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "StrafeLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "44a6d46f-4909-4131-8173-74d45696de8f",
-                    "path": "<HID::Sony Interactive Entertainment Controller>/button8",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "StrafeRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f1b1ae27-2030-4cd0-8d7f-a9da0e16f6fa",
-                    "path": "<Joystick>/stick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "858ae8a7-ec63-44c0-867d-9427a1fa58ad",
-                    "path": "<Joystick>/stick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateRight",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

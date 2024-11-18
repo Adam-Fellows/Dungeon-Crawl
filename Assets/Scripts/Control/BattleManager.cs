@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Crawl.Battle;
+using Crawl.Data;
 
 //TODO: visual feedback and pausing turns
 //TODO: implement remaining player actions + battle end

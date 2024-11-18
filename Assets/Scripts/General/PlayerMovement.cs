@@ -43,28 +43,29 @@ namespace Crawl.Player
 
         private void Instance_OnForwardPressed(object sender, EventArgs e)
         {
-            BeginMove(Vector3.forward);
+            if (TryMove(transform.forward)) BeginMove(Vector3.forward);
         }
 
         private void Instance_OnBackwardPressed(object sender, EventArgs e)
         {
-            BeginMove(Vector3.back);
+            if (TryMove(-transform.forward)) BeginMove(Vector3.back);
         }
 
         private void Instance_OnStrafeRightPressed(object sender, EventArgs e)
         {
-            BeginMove(Vector3.right);
+            if (TryMove(transform.right)) BeginMove(Vector3.right);
         }
 
         private void Instance_OnStrafeLeftPressed(object sender, EventArgs e)
         {
-            BeginMove(Vector3.left);
+            if (TryMove(-transform.right)) BeginMove(Vector3.left);
         }
 
         private void BeginMove(Vector3 direction)
         {
+            Debug.Log("Begin player move");
             // Do checks to ensure the player can move in desired direction
-            if (!MovingToObstruction(direction) && !MovingToEnemy(direction) && CanMove())
+            if (CanMove())
             {
                 // Not moving onto enemy/obstruction so move
                 Move(direction);
@@ -85,24 +86,11 @@ namespace Crawl.Player
 
         private void EndMove()
         {
+            Debug.Log("End player move");
             // Send out events on player move end
         }
 
-        private bool MovingToObstruction(Vector3 direction)
-        {
-            if (Physics.Raycast(transform.position, direction, out var hit, collisionCheckDistance, obstructionMask))
-            {
-                if (!hit.transform.gameObject.GetComponent<Collider>().isTrigger)
-                {
-                    // Moving onto an obstruction so return true
-                    return true;
-                }
-            }
-            // Not moving onto an obstruction so return false
-            return false;
-        }
-
-        private bool MovingToEnemy(Vector3 direction)
+        private bool TryMove(Vector3 direction)
         {
             if (Physics.Raycast(transform.position, direction, out var hit, collisionCheckDistance, enemyMask))
             {
@@ -113,22 +101,31 @@ namespace Crawl.Player
                     // Initiate combat if moving onto enemy
                     PlayerManager.instance.EnemyEncounter(enemy, enemy.gameObject);
                     // Moving onto the enemy
-                    return true;
+                    return false;
                 }
             }
-            // Not moving onto enemy so return false
-            return false;
+            else if (Physics.Raycast(transform.position, direction, out hit, collisionCheckDistance, obstructionMask))
+            {
+                if (!hit.transform.gameObject.GetComponent<Collider>().isTrigger)
+                {
+                    Debug.Log(hit.transform.name);
+                    // Moving onto an obstruction 
+                    return false;
+                }
+            }
+            // Movement is not obstructed by enemy or object
+            return true;
         }
 
         private bool CanMove()
         {
             if (GameManager.instance.GetGameState() != GameState.combat && !isMoving && !isRotating)
             {
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 
@@ -136,11 +133,11 @@ namespace Crawl.Player
         {
             if (GameManager.instance.GetGameState() != GameState.combat && !isMoving && !isRotating)
             {
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 
